@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  app-lms:
+    image: bproenca/logs-metrics-spring:latest
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        max_failure_ratio: 0.5
+      resources:
+         reservations:
+           memory: 20M
+         limits:
+          memory: 80M
+    ports:
+      - 8080:8080/tcp
+    networks:
+      - app-network
+      - monitor
+
+networks:
+  app-network:
+    external: true
+  monitor:
+    external: true

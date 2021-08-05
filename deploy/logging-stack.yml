@@ -1,0 +1,88 @@
+version: '3.3'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.1
+    environment:
+      - xpack.security.enabled=false
+      - LOGSPOUT=ignore
+    deploy:
+      resources:
+        reservations:
+          memory: 3000M
+        limits:
+          memory: 3500M
+      placement:
+        constraints: [node.role == manager]
+    volumes:
+      - /data/elasticsearch/data:/usr/share/elasticsearch/data
+    # ports:
+    #   - 9200:9200
+    networks:
+      - monitor
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:5.6.1
+    environment:
+      - xpack.security.enabled=false
+      - LOGSPOUT=ignore
+    deploy:
+      resources:
+        reservations:
+          memory: 400M
+        limits:
+          memory: 800M
+      placement:
+        constraints: [node.role == worker]
+    configs:
+      - source: logstash.conf
+        target: /usr/share/logstash/pipeline/logstash.conf
+        uid: '1000'
+        gid: '1000'
+        mode: 0664
+    command: logstash -f /usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - monitor
+
+  kibana:
+     image: docker.elastic.co/kibana/kibana:5.6.1
+     environment:
+       - xpack.security.enabled=false
+       - ELASTICSEARCH_URL=http://elasticsearch:9200
+       - LOGSPOUT=ignore
+     deploy:
+       resources:
+         reservations:
+           memory: 600M
+         limits:
+           memory: 1000M
+       placement:
+         constraints: [node.role == worker]
+     ports:
+        - 5601:5601
+     networks:
+       - monitor
+
+  logspout:
+     image: gliderlabs/logspout:v3.2.3
+     environment:
+       - SYSLOG_FORMAT=rfc3164
+     volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
+     command: syslog://logstash:51415
+     deploy:
+       mode: global
+       resources:
+         reservations:
+           memory: 20M
+         limits:
+           memory: 30M
+     networks:
+      - monitor
+
+networks:
+  monitor:
+    external: true
+
+configs:
+  logstash.conf:
+    external: true
