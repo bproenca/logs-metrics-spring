@@ -15,13 +15,27 @@ services:
         target: /etc/prometheus/prometheus.yml
     volumes:
       - /data/prometheus/data:/prometheus
-    command:
-      - '-config.file=/etc/prometheus/prometheus.yml'
-      - '-storage.local.path=/prometheus'
-      - '-web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '-web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - 9090:9090
+    networks:
+      - monitor
+
+  grafana:
+    image: grafana/grafana:4.5.2
+    deploy:
+      resources:
+        reservations:
+          memory: 30M
+        limits:
+          memory: 200M
+      placement:
+        constraints: [node.role == manager]
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - /data/grafana/data:/data/grafana/data
+    ports:
+      - 3000:3000
     networks:
       - monitor
 

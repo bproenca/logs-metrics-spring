@@ -1,0 +1,7 @@
+Docker Swarm & Container Overview - https://grafana.com/dashboards/609
+
+Prometheus Stats - https://grafana.com/dashboards/358
+
+Node Exporter Server Metrics - https://grafana.com/dashboards/405
+
+Node exporter server stats - https://grafana.com/dashboards/704
