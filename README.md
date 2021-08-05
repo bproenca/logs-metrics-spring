@@ -26,8 +26,13 @@ docker network create -d overlay app-network
 ## Deploy
 
 ```
+docker config create logstash.conf deploy/logstash.conf
 docker stack deploy -c deploy/logging-stack.yml logging
 docker stack deploy -c deploy/api-stack.yml api
+docker stack deploy -c deploy/exporters-stack.yml exporter
+docker config create prometheus.yml deploy/prometheus.yml
+docker stack deploy -c deploy/monitoring-stack.yml monitoring
+
 
 docker stack ps -f desired-state=running logging
 docker stack ps -f desired-state=running api
