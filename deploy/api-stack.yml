@@ -12,9 +12,9 @@ services:
         max_failure_ratio: 0.5
       resources:
          reservations:
-           memory: 20M
+           memory: 128M
          limits:
-          memory: 80M
+          memory: 256M
     ports:
       - 8080:8080/tcp
     networks:

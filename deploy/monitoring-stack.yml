@@ -33,7 +33,7 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
-      - /data/grafana/data:/data/grafana/data
+      - /data/grafana/data:/var/lib/grafana
     ports:
       - 3000:3000
     networks:
