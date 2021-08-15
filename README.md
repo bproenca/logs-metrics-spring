@@ -28,6 +28,7 @@ docker network create -d overlay app-network
 ```
 docker config create logstash.conf deploy/logstash.conf
 docker config create prometheus.yml deploy/prometheus.yml
+docker config create filebeat.yml deploy/filebeat.yml
 
 docker stack deploy -c deploy/logging-stack.yml logging
 docker stack deploy -c deploy/api-stack.yml api

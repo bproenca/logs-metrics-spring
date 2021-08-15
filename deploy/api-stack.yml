@@ -3,6 +3,9 @@ version: "3.8"
 services:
   app-lms:
     image: bproenca/logs-metrics-spring:latest
+    labels:
+      collect_logs_with_filebeat: "true"
+      decode_log_event_to_json_object: "true"
     deploy:
       replicas: 3
       update_config:
