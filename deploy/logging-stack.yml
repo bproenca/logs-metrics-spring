@@ -55,7 +55,6 @@ services:
         target: /usr/share/filebeat/filebeat.yml
         mode: 0644    
     user: root                                                        # Allow access to log files and docker.sock
-    restart: on-failure
     deploy:
       mode: global
       resources:
