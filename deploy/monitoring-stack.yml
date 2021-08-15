@@ -23,6 +23,7 @@ services:
 
   grafana:
     image: grafana/grafana:8.0.5
+    user: "1000:1000"
     deploy:
       resources:
         reservations:
