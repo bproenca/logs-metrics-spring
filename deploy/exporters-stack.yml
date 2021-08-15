@@ -29,7 +29,7 @@ services:
         - /proc:/host/proc
         - /sys:/host/sys
         - /:/rootfs
-        - /etc/hostname:/etc/host_hostname
+        - /etc/hostname-swarm:/etc/host_hostname
       deploy:
         mode: global
         resources:

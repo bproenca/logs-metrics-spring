@@ -2,11 +2,20 @@ ssh -i ~/.aws/pem/bcp_aws_gmail.pem ec2-user@172.31.73.56
 
 sudo yum update -y 
 sudo amazon-linux-extras install docker -y
+sudo yum install git -y
 
 sudo service docker start
 # Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
 sudo usermod -a -G docker ec2-user
 sudo chkconfig docker on
+
+# Install docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+
+Until here, done by UserData
+----------------------------------------------------------------
 
 # Test docker
 docker info
@@ -27,7 +36,23 @@ sudo vim /etc/fstab
     UUID=04b92f2f-4366-4687-868b-7c403cc59901     /           xfs    defaults,noatime  1   1
     UUID=f56a2952-d69e-43dd-be04-712ac090f0b9  /data  ext4  defaults,nofail  0  2
 
-# Install docker-compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-docker-compose --version
+
+
+# Init swarm manager
+echo "My IP: $(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)"
+docker swarm init --advertise-addr $(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+docker network create -d overlay monitor
+docker network create -d overlay app-network
+    # Run on each worker
+    docker swarm join --token SWMTKN-1-45i6abu4qy0puhevkz9i1hof4y4ee00dhwbg5vzz9r0751scfo-3w1fj1dkfrqqfwu7qg3a6e9fm 172.31.73.56:2377
+
+mkdir -p /data/elasticsearch/data
+mkdir -p /data/prometheus/data
+mkdir -p /data/grafana/data
+
+echo 'vm.max_map_count=262144' | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+ls -la /data
+
+echo 'managernode' | sudo tee -a /etc/hostname-swarm
+echo 'worker1node' | sudo tee -a /etc/hostname-swarm
+echo 'worker2node' | sudo tee -a /etc/hostname-swarm
