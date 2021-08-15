@@ -1,13 +1,13 @@
 version: '3.8'
 services:
   prometheus:
-    image: prom/prometheus:v1.7.2
+    image: prom/prometheus:v2.28.1
     deploy:
       resources:
         reservations:
-          memory: 500M
+          memory: 512M
         limits:
-          memory: 1500M
+          memory: 1536M
       placement:
         constraints: [node.role == manager]
     configs:
@@ -21,13 +21,13 @@ services:
       - monitor
 
   grafana:
-    image: grafana/grafana:4.5.2
+    image: grafana/grafana:8.0.5
     deploy:
       resources:
         reservations:
-          memory: 30M
+          memory: 256M
         limits:
-          memory: 200M
+          memory: 512M
       placement:
         constraints: [node.role == manager]
     environment:

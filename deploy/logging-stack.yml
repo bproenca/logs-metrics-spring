@@ -1,18 +1,20 @@
 version: '3.8'
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.1
+    image: elasticsearch:7.13.2
     ulimits:
       nofile: 65536
     environment:
-      - xpack.security.enabled=false
-      - LOGSPOUT=ignore
+      - "xpack.security.enabled=false"
+      - "LOGSPOUT=ignore"
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx2048m"
+      - "discovery.type=single-node"
     deploy:
       resources:
         reservations:
-          memory: 3000M
+          memory: 2048M
         limits:
-          memory: 3500M
+          memory: 3072M
       placement:
         constraints: [node.role == manager]
     volumes:
@@ -23,16 +25,16 @@ services:
       - monitor
 
   logstash:
-    image: docker.elastic.co/logstash/logstash:5.6.1
+    image: logstash:7.13.2
     environment:
       - xpack.security.enabled=false
       - LOGSPOUT=ignore
     deploy:
       resources:
         reservations:
-          memory: 400M
+          memory: 384M
         limits:
-          memory: 800M
+          memory: 768M
       placement:
         constraints: [node.role == worker]
     configs:
@@ -46,17 +48,17 @@ services:
       - monitor
 
   kibana:
-     image: docker.elastic.co/kibana/kibana:5.6.1
+     image: kibana:7.13.2
      environment:
        - xpack.security.enabled=false
-       - ELASTICSEARCH_URL=http://elasticsearch:9200
+       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
        - LOGSPOUT=ignore
      deploy:
        resources:
          reservations:
-           memory: 600M
+           memory: 512M
          limits:
-           memory: 1000M
+           memory: 1024M
        placement:
          constraints: [node.role == worker]
      ports:
