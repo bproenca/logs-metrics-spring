@@ -8,7 +8,7 @@ services:
       - "xpack.security.enabled=false"
       - "LOGSPOUT=ignore"
       - "ES_JAVA_OPTS=-Xms1024m -Xmx2048m"
-      - "discovery.type=single-filebeat.ymlnode"
+      - "discovery.type=single-node"
     deploy:
       resources:
         reservations:
