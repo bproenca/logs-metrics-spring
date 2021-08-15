@@ -52,6 +52,8 @@ mkdir -p /data/grafana/data
 mkdir -p /data/filebeat/data
 
 cp deploy/filebeat.yml /data/
+sudo chown root:root /data/filebeat.yml
+sudo chmod go-w /data/filebeat.yml
 
 echo 'vm.max_map_count=262144' | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 ls -la /data
