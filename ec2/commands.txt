@@ -1,0 +1,33 @@
+ssh -i ~/.aws/pem/bcp_aws_gmail.pem ec2-user@172.31.73.56
+
+sudo yum update -y 
+sudo amazon-linux-extras install docker -y
+
+sudo service docker start
+# Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
+sudo usermod -a -G docker ec2-user
+sudo chkconfig docker on
+
+# Test docker
+docker info
+docker run hello-world
+
+# Mount EBS volume
+lsblk
+sudo mkfs -t ext4 device_name
+sudo mkdir /data
+sudo mount device_name /data
+sudo chown -R ec2-user:ec2-user /data
+echo "Volume cretate at $(date)" >> /data/info.txt
+
+# To mount an attached volume automatically after reboot
+sudo blkid
+sudo vim /etc/fstab
+    #
+    UUID=04b92f2f-4366-4687-868b-7c403cc59901     /           xfs    defaults,noatime  1   1
+    UUID=f56a2952-d69e-43dd-be04-712ac090f0b9  /data  ext4  defaults,nofail  0  2
+
+# Install docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
