@@ -45,7 +45,6 @@ services:
 
   filebeat:
     image: "docker.elastic.co/beats/filebeat:7.13.2"
-    command: filebeat -e -strict.perms=false
     volumes:
       - /data/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro            # Configuration file
       - /var/lib/docker/containers:/var/lib/docker/containers:ro      # Docker logs
@@ -56,9 +55,9 @@ services:
       mode: global
       resources:
         reservations:
-          memory: 128M
+          memory: 64M
         limits:
-          memory: 256M
+          memory: 128M
     networks:
       - monitor
 
