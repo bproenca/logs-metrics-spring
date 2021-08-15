@@ -53,7 +53,6 @@ services:
     configs:
       - source: filebeat.yml
         target: /usr/share/filebeat/filebeat.yml
-        mode: 0644    
     user: root                                                        # Allow access to log files and docker.sock
     deploy:
       mode: global
