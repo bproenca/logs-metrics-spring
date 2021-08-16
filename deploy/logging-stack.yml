@@ -5,8 +5,6 @@ services:
     ulimits:
       nofile: 65536
     environment:
-      - "xpack.security.enabled=false"
-      - "LOGSPOUT=ignore"
       - "ES_JAVA_OPTS=-Xms1024m -Xmx2048m"
       - "discovery.type=single-node"
     deploy:
@@ -27,9 +25,7 @@ services:
   kibana:
      image: kibana:7.13.2
      environment:
-       - xpack.security.enabled=false
        - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-       - LOGSPOUT=ignore
      deploy:
        resources:
          reservations:
