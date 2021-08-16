@@ -64,5 +64,5 @@ networks:
     external: true
 
 configs:
-  logstash.conf:
+  filebeat.yml:
     external: true
