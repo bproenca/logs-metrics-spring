@@ -1,7 +1,3 @@
-filebeat.modules:
-- module: auditd
-  log:
-    enabled: false  
 filebeat.autodiscover:
   providers:
     - type: docker
