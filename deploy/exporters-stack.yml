@@ -19,17 +19,11 @@ services:
     networks:
       - monitor
 
-  node-exporter:
-      image: basi/node-exporter:v1.13.0
-      networks:
-        - monitor
-      environment:
-        - HOST_HOSTNAME=/etc/host_hostname
+    node-exporter:
+      image: "prom/node-exporter:v1.2.1"
+      pid: host # https://docs.docker.com/compose/compose-file/compose-file-v3/#pid
       volumes:
-        - /proc:/host/proc
-        - /sys:/host/sys
-        - /:/rootfs
-        - /etc/hostname-swarm:/etc/host_hostname
+        - '/:/host:ro,rslave'
       deploy:
         mode: global
         resources:
@@ -37,8 +31,11 @@ services:
             memory: 20M
           limits:
             memory: 70M
-      command: '-collector.procfs /host/proc -collector.sysfs /host/sys -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($$|/)" -collector.textfile.directory /etc/node-exporter/ -collectors.enabled="conntrack,diskstats,entropy,filefd,filesystem,loadavg,mdadm,meminfo,netdev,netstat,stat,textfile,time,vmstat,ipvs"'
-
+      command:
+        - '--path.rootfs=/host'
+      networks:
+        - monitor
+  
 networks:
   monitor:
     external: true

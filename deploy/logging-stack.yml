@@ -10,9 +10,9 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 2048M
+          memory: 1024M
         limits:
-          memory: 3072M
+          memory: 2048M
       placement:
         constraints: [node.role == manager]
     volumes:
