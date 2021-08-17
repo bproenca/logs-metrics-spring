@@ -19,22 +19,22 @@ services:
     networks:
       - monitor
 
-    node-exporter:
-      image: "prom/node-exporter:v1.2.1"
-      pid: host # https://docs.docker.com/compose/compose-file/compose-file-v3/#pid
-      volumes:
-        - '/:/host:ro,rslave'
-      deploy:
-        mode: global
-        resources:
-          reservations:
-            memory: 20M
-          limits:
-            memory: 70M
-      command:
-        - '--path.rootfs=/host'
-      networks:
-        - monitor
+  node-exporter:
+    image: "prom/node-exporter:v1.2.1"
+    pid: host # https://docs.docker.com/compose/compose-file/compose-file-v3/#pid
+    volumes:
+      - '/:/host:ro,rslave'
+    deploy:
+      mode: global
+      resources:
+        reservations:
+          memory: 20M
+        limits:
+          memory: 70M
+    command:
+      - '--path.rootfs=/host'
+    networks:
+      - monitor
   
 networks:
   monitor:
