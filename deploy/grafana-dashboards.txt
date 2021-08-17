@@ -1,7 +1,19 @@
-Docker Swarm & Container Overview - https://grafana.com/dashboards/609
+# OK
 
-Prometheus Stats - https://grafana.com/dashboards/358
+Node Exporter Full - https://grafana.com/grafana/dashboards/1860
+
+JVM (Micrometer) - https://grafana.com/grafana/dashboards/4701
+
+Docker Swarm & Container Overview - https://grafana.com/dashboards/609
 
 Node Exporter Server Metrics - https://grafana.com/dashboards/405
 
+Node Exporter for Prometheus Dashboard - https://grafana.com/grafana/dashboards/11074
+
+
+# NOK
+
+Prometheus Stats - https://grafana.com/dashboards/358
+
 Node exporter server stats - https://grafana.com/dashboards/704
+
