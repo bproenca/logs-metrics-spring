@@ -45,5 +45,5 @@ mkdir -p /d/storage/grafana/data
 
 ## Node 1 e 3 (workers)
 
-docker swarm join --token SWMTKN-1-5sw8lxjc3nczgus3rw60hdrqw13sd95320h6awa6ba7gnnwqrn-8ovvlifavh5ljgkzify8vqoyf 172.19.30.215:2377
+docker swarm join --token SWMTKN-1-5sw8lxjc3nczgus3rw60hdrqw13sd95320h6awa6ba7gnnwqrn-8ovvlifavh5ljgkzify8vqoyf <ip>:2377
 
