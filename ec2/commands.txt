@@ -27,7 +27,7 @@ sudo mkfs -t ext4 device_name
 sudo mkdir /data
 sudo mount device_name /data
 sudo chown -R ec2-user:ec2-user /data
-echo "Volume cretate at $(date)" >> /data/info.txt
+echo "Volume cretate at $(date)" >> /d/storage/info.txt
 
 # To mount an attached volume automatically after reboot
 sudo blkid
@@ -46,14 +46,14 @@ docker network create -d overlay app-network
     # Run on each worker
     docker swarm join --token SWMTKN-1-45i6abu4qy0puhevkz9i1hof4y4ee00dhwbg5vzz9r0751scfo-3w1fj1dkfrqqfwu7qg3a6e9fm 172.31.73.56:2377
 
-mkdir -p /data/elasticsearch/data
-mkdir -p /data/prometheus/data
-mkdir -p /data/grafana/data
-mkdir -p /data/filebeat/data
+mkdir -p /d/storage/elasticsearch/data
+mkdir -p /d/storage/prometheus/data
+mkdir -p /d/storage/grafana/data
+mkdir -p /d/storage/filebeat/data
 
-cp deploy/filebeat.yml /data/
-sudo chown root:root /data/filebeat.yml
-sudo chmod go-w /data/filebeat.yml
+cp deploy/filebeat.yml /d/storage/
+sudo chown root:root /d/storage/filebeat.yml
+sudo chmod go-w /d/storage/filebeat.yml
 
 echo 'vm.max_map_count=262144' | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 ls -la /data

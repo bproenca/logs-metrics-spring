@@ -1,6 +1,6 @@
 eval "$(docker-machine env swarm-1)"
 
-docker-machine ssh swarm-1 "sudo mkdir -p /data/elasticsearch/data sudo chown -R 1000.1000 /data"
+docker-machine ssh swarm-1 "sudo mkdir -p /d/storage/elasticsearch/data sudo chown -R 1000.1000 /data"
 
 docker network create -d overlay monitor
 

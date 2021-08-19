@@ -16,7 +16,7 @@ services:
       placement:
         constraints: [node.role == manager]
     volumes:
-      - /data/elasticsearch/data:/usr/share/elasticsearch/data
+      - /d/storage/elasticsearch/data:/usr/share/elasticsearch/data
     # ports:
     #   - 9200:9200
     networks:
@@ -44,7 +44,7 @@ services:
     volumes:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro      # Docker logs
       - /var/run/docker.sock:/var/run/docker.sock:ro                  # Additional information about containers
-      - /data/filebeat/data:/usr/share/filebeat/data:rw               # Persistence data
+      - /d/storage/filebeat/data:/usr/share/filebeat/data:rw               # Persistence data
     user: root                                                        # Allow access to log files and docker.sock
     configs:
       - source: filebeat.yml

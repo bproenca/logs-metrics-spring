@@ -21,10 +21,10 @@ done
 eval "$(docker-machine env swarm-1)"
 echo "Creating dirs (node manager)"
 docker-machine ssh swarm-1 "whoami"
-docker-machine ssh swarm-1 "sudo mkdir -p /data/elasticsearch/data && sudo chown -R 1000.1000 /data"
+docker-machine ssh swarm-1 "sudo mkdir -p /d/storage/elasticsearch/data && sudo chown -R 1000.1000 /data/storage"
 docker-machine ssh swarm-1 "echo 'vm.max_map_count=262144' | sudo tee -a /etc/sysctl.conf && sudo sysctl -p"
-docker-machine ssh swarm-1 "sudo mkdir -p /data/prometheus/data && sudo chown -R 1000.1000 /data"
-docker-machine ssh swarm-1 "sudo mkdir -p /data/grafana/data && sudo chown -R 1000.1000 /data"
+docker-machine ssh swarm-1 "sudo mkdir -p /d/storage/prometheus/data && sudo chown -R 1000.1000 /data/storage"
+docker-machine ssh swarm-1 "sudo mkdir -p /d/storage/grafana/data && sudo chown -R 1000.1000 /data/storage"
 docker-machine ssh swarm-1 "ls -la /data"
 
 echo "Pull global images"
