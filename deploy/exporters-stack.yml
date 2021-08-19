@@ -13,7 +13,7 @@ services:
       - /:/rootfs
       - /var/run:/var/run
       - /sys:/sys
-      - /var/lib/docker:/var/lib/docker
+      - /d/docker:/var/lib/docker
     # ports:
     #   - 8080:8080
     networks:

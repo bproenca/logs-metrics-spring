@@ -3,8 +3,6 @@ services:
   prometheus:
     image: prom/prometheus:v2.28.1
     user: "1000:1000"
-    environment:
-      - LOGSPOUT=ignore
     deploy:
       resources:
         reservations:
@@ -36,7 +34,6 @@ services:
         constraints: [node.role == manager]
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
-      - LOGSPOUT=ignore
     volumes:
       - /d/storage/grafana/data:/var/lib/grafana
     ports:
